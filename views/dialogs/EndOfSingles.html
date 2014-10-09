@@ -1,0 +1,26 @@
+<div class="modal-header primary">
+	<h3>Einde wedstrijd</h3>
+</div>
+<div class="modal-body">
+	<h4>Trainingsoverzicht</h4>
+	<table class="table table-bordered playerTable table-striped table-responsive">
+		<thead>
+			<tr>
+				<th>Naam</th>
+				<th ng-repeat="entry in gameScope.dartBoard | orderBy :'val'">{{entry.title}}</th>
+				<th>Totaal</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="player in gameScope.Game.singlePlayers">
+				<td>{{player.name}}</td>
+				<td ng-repeat="nmbr in gameScope.dartBoard | orderBy :'val'">{{player.scores[nmbr.val]}}</td>
+				<td class="bold">{{player.hits}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal-footer primary">
+	<button class="btn btn-primary" ng-click="cancel()">Sluiten</button>
+	<!--<button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>

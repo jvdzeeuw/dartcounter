@@ -1,0 +1,12 @@
+<div class="modal-header primary">
+	<h3>Aantal pijlen uitgegooid</h3>
+</div>
+<div class="modal-body">
+	<span ng-repeat="item in items" class="list-unstyled">
+		<label class="ui-radio"><input name="radio1" type="radio" value="{{ item }}" ng-checked="selected.item === item" ng-click="selected.item = item"><span>{{ item }}</span></label>
+	</span>
+</div>
+<div class="modal-footer primary">
+	<button class="btn btn-primary" ng-click="ok()">Bevestigen</button>
+	<!--<button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>

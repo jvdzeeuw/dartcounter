@@ -1,0 +1,421 @@
+body{
+    margin: 0;
+    background: #475F77;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #5F5F5F;
+    text-shadow: 1px 1px #FFFFFF;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Roboto Slab', serif;
+}
+
+.title{
+    color: #D74B4B;
+    border:0 0 1px 0 solid;
+    font-size:26pt;
+    text-shadow: 1px 1px #0E0E0E;
+}
+
+.centered{
+    text-align:center;
+}
+
+#container{
+    width:960px;
+    margin:0 auto;
+}
+
+header{
+    width:100%;
+    height:100px;
+}
+
+.content{
+    width:100%;
+}
+
+.content .inner{
+    padding: 10px;
+}
+
+.gameForm{
+    width:960px;
+    background:#fff;
+    margin-bottom:10px;
+}
+
+.leftHalf{
+    float:left;
+    width:45%;
+    margin-right:10%;
+    background: #F7F7F7;
+	margin-bottom: 25px;
+}
+
+.leftHalf.throwing{
+	margin-bottom: 18px;
+}
+
+.rightHalf{
+    float:right;
+    width:45%;
+    background: #F7F7F7;
+	margin-bottom: 25px;
+}
+
+.teamrow{
+    width:100%;
+    float:left;
+    margin-bottom:10px;
+    font-size: 16pt;
+    line-height:16pt;
+}
+
+label{
+    width:38%;
+    float:left;
+    padding-left:2%;
+}
+
+input,select,textarea{
+    width:58%;
+    float:left;
+    padding-right:2%;
+    height:20pt;
+    border: 1px solid #929292;
+}
+
+footer{
+    width:100%;
+    height:100px;
+}
+
+hr{
+    height:2px;
+    background:#354B5E;
+    border:none;
+    float: left;
+    width: 100%;
+}
+
+.clear{
+    clear:both;
+}
+
+.halfRow{
+    width:27%;
+}
+.halfRow.first{
+    margin-right:4%;
+}
+
+.team{
+    padding: 2px 10px;
+    border-bottom: 1px solid #AFACAC;
+    cursor:pointer;
+    background: #F7F7F7;
+}
+
+.team h2{
+    margin: 0 0 5px 0;
+    font-size: 21px;
+    float:left;
+}
+
+span.button{
+    display: inline-block;
+    font-size: 11pt;
+    padding: 6px;
+    text-shadow: 1px 1px #C4C4C4;
+    float: right;
+    margin-right:4%
+    
+}
+
+span.button:hover{
+    cursor:pointer;
+}
+
+.addTeam{
+    background-color: #72F06D;
+}
+
+.addPlayer{
+    background-color: #79C4FF;    
+}
+
+.startGame{
+    background-color: rgb(255, 111, 111);
+    color: white;
+    text-shadow: 1px 1px #696969!important;
+    font-size: 16pt!important;
+    margin-right:1%!important;
+    margin-top:10px;
+}
+
+span.small{
+    margin-right: 2%;
+}
+
+.smallIcon{
+    font-size: 11pt;
+    margin-right: 5px;
+}
+
+.smallIcon:hover{
+    color: rgb(255, 111, 111);
+    cursor:pointer;
+}
+
+.startScores{
+    float:left;
+    width:58%;
+}
+
+.startScores input{
+    width:6%;
+    height:16px;
+}
+
+#customScore{
+	margin-top: 7px;
+}
+
+#customScoreInput{
+	width: 38px;
+	height: 20px;
+	margin: 5px 0 0 5px;
+}
+
+span.player{
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+h2.score{
+    font-size: 70pt;
+    background: white;
+    border: 1px solid #B1B1B1;
+    margin: 0 50px 15px;
+}
+
+h2.score.multi{
+	margin-left:10px;
+	margin-right: 0px;
+	float:left;
+	width: 55%;
+}
+
+span.multiplayer{
+	margin: 1px 0 0;
+	height: 20px;
+	width: 30%;
+	float: left;
+	background: rgb(236, 75, 75);
+	border: 1px solid #494545;
+	color: #ffffff;
+	text-shadow: none;
+	padding: 1px 0 1px 9px;	
+}
+
+span.indicator{
+	margin: 0px 0 0 1px;
+	width: 5%;
+	height: 20px;
+	line-height: 20px;
+	border: 1px solid;
+	float: left;
+	background: rgb(62, 145, 16);
+	padding: 3px 0 0px 5px;
+	color: #ffffff;
+	text-shadow: none;
+}
+
+.hidden{
+	display:none;
+}
+
+.throwing .score{
+	border-bottom:7px solid rgb(236, 75, 75);
+}
+
+.scoreInput.invalid{
+	border:3px solid rgb(236, 75, 75);
+}
+
+.leftHalf.game{
+    width:38%;
+    margin-right: 0px;
+}
+
+.midSection{
+    width:24%;
+    float:left;
+    padding-top:40px;
+}
+
+.rightHalf.game{
+    width:38%;
+}
+
+.scoreInput{
+    height: 40pt;
+    text-align: center;
+    margin: 0 auto;
+    border: 1px solid #929292;
+    display: block;
+    font-size: 35pt;
+    width: 60%;
+	float: none;
+    padding: 0 17px;
+    color: #4D4D4D;
+}
+
+.submitScore{
+    display: block;
+    margin: 5px auto 0;
+    width: 60%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    background: #ccc;
+}
+
+.undoScore{
+    display: block;
+    margin: 3px auto 0;
+    width: 60%;
+    text-align: center;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    color:#fff;
+    text-shadow: none;
+    background: #EC4B4B;
+}
+
+.stats dl{
+	padding-left: 7%;
+}
+
+.stats dl dd{
+	float: left;
+	width: 38%;
+	margin-left: 0;
+}
+
+.stats dl dt{
+	float: left;
+	width: 58%;
+}
+
+/*SCOREBOARD*/
+.scoreBoard{
+	margin-top:15px;
+	float:left;
+	width:100%;
+}
+
+.scoreBoard.rightPos{
+	width: 38%;
+	margin-top:6%;
+}
+.rightPos #scoreTable{
+	width:93%;
+}
+
+#scoreTable{
+	width:80%;
+	border-collapse: collapse;
+	margin:0 auto;
+	border: 1px solid;
+}
+
+#scoreTable th{
+	background: rgb(82, 82, 82);
+	color: white;
+	text-shadow: 1px 1px #1D1919;
+}
+
+#scoreTable tr{
+	border-bottom:1px solid grey;
+}
+
+#scoreTable td{
+	border: 1px solid;
+	text-align: center;
+}
+
+/*END SCOREBOARD*/
+
+#dartsThrown{
+	width:300px;
+	height:100px;
+}
+
+#dartsThrown label{
+	width: 40px;
+	float: left;
+	margin-left: 5%;
+	text-align: center;
+	margin-top: 8%;
+	line-height: 40px;
+	font-size:16pt;
+	display: block;
+	height: 40px;
+	background: #E94141;
+}
+
+#dartsThrown input{
+	display:none;
+}
+
+#dartsThrown .current,
+#dartsThrown label:hover{
+	cursor:pointer;
+	border: 2px solid;
+	margin-top: 21px;
+	font-size: 20pt;
+}
+
+#dartsThrown span{
+	float: left;
+	display: block;
+	width: 75px;
+	height: 25px;
+	text-align: center;
+	cursor: pointer;
+	margin: 30px 0 0 10px;
+	background: rgb(98, 173, 238);
+}
+
+#dartsThrown h2{
+	font-size: 15pt;
+	margin: 0;
+}
+
+.possible{
+	text-align:center;
+	width:100%;
+	font-weight:bold;
+	float:left;
+}
+
+.impossible{
+	text-align:center;
+	width:100%;
+	color: #E94141;
+	float:left;
+}
+
+.highlight{
+    float:left;
+    border: 1px dotted #AFACAC;
+    height: 80px;
+    width:90%;
+}

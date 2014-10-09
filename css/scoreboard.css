@@ -1,0 +1,38 @@
+.scoreBoard{
+    width: 60%;
+	margin: 15px 20%;
+	background: #fff;
+	height: 211px;
+	overflow-y: scroll;
+	font-size: 20px;
+}
+
+.scoreBoard .scoreRow{
+	border-bottom:1px solid;
+	float:left;
+	width:100%
+}
+
+.scoreBoard .scoreRow span{
+	border:0;
+	width:50%;
+}
+
+.scoreBoard span{
+	width:50%;
+	display:block;
+	float:left;
+	border-right:1px solid;
+	height:30px;
+	line-height:30px;
+	text-align:center
+}
+
+.scoreBoard span.remaining{
+	width:50%;
+	border:0!important;
+}
+
+.scoreBoard span.remaining:last-child {
+	font-weight:bold;
+}

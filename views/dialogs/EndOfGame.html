@@ -1,0 +1,74 @@
+<div class="modal-header primary">
+	<h3>Einde wedstrijd</h3>
+</div>
+<div class="modal-body">
+	Winnaar: Team {{gameScope.currentTeam.ID}}
+	<h4>Wedstrijdoverzicht</h4>
+	<div data-slim-scroll data-scroll-height="400px">
+	<table class="table table-bordered table-striped table-responsive" style="font-size:12px;">
+		<thead>
+			<tr>
+				<th></th>
+				<th ng-repeat="team in gameScope.teams">Team {{team.ID}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="bold">Gemiddelde</td>
+				<td ng-repeat="team in gameScope.teams">{{team.avg|| 0 | number:2 || 'n.v.t.'}}</td>
+			</tr>
+			<tr>
+				<td class="bold">Hoogste gemiddelde (spel)</td>
+				<td ng-repeat="team in gameScope.teams">{{team.highestAvg|| 0 | number:2 || 'n.v.t.'}}</td>
+			</tr>
+			<tr>
+				<td class="bold">Hoogste beginscore</td>
+				<td ng-repeat="team in gameScope.teams">{{team.highestStart || 'n.v.t.'}}</td>
+			</tr>
+			<tr>
+				<td class="bold">Hoogste score</td>
+				<td ng-repeat="team in gameScope.teams">{{team.highestScore || 'n.v.t.'}}</td>
+			</tr>
+			<tr>
+				<td class="bold">Hoogste finish</td>
+				<td ng-repeat="team in gameScope.teams">{{team.highestOut || 'n.v.t.'}}</td>
+			</tr>
+			<tr>
+				<td class="bold">Gem. aantal darts/leg</td>
+				<td ng-repeat="team in gameScope.teams">{{team.avgDarts || 'n.v.t.'}}</td>
+			</tr>
+			<tr>
+				<td class="bold" style="text-align:center" colspan="{{gameScope.Game.amountOfTeams+1}}">Scores</td>
+			</tr>
+			<tr>
+				<td class="bold">180</td>
+				<td ng-repeat="team in gameScope.teams">{{team.t180}}</td>
+			</tr>
+			<tr>
+				<td class="bold">140+</td>
+				<td ng-repeat="team in gameScope.teams">{{team.t140}}</td>
+			</tr>
+			<tr>
+				<td class="bold">120+</td>
+				<td ng-repeat="team in gameScope.teams">{{team.t120}}</td>
+			</tr>
+			<tr>
+				<td class="bold">100+</td>
+				<td ng-repeat="team in gameScope.teams">{{team.t100}}</td>
+			</tr>
+			<tr>
+				<td class="bold">80+</td>
+				<td ng-repeat="team in gameScope.teams">{{team.t80}}</td>
+			</tr>
+			<tr>
+				<td class="bold">60+</td>
+				<td ng-repeat="team in gameScope.teams">{{team.t60}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+<div class="modal-footer primary">
+	<button class="btn btn-primary" ng-click="cancel()">Sluiten</button>
+	<!--<button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>

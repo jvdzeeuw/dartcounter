@@ -1,0 +1,395 @@
+<div class="page" ng-class="{'page-dashboard': view === 'dashboard','page-profile': view != 'dashboard'}"data-ng-controller="HomeController">
+    <section class="panel panel-default"  ng-show="view === 'dashboard'">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Nieuw spel</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Spelers</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal form-validation" ng-show="Game.type === 'game'">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <span class="btn btn-success btn-w-xs btn-xs" ng-hide="teams.length > 3" ng-click="AddTeam()">Team toevoegen</span>
+                                    </div>
+                                </div>
+                                <div id="allTeams">
+                                    <div ng-repeat="team in teams" class="team">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" style="font-size: 17px;">Team {{$index + 1}}</label>
+                                            <div class="col-sm-1">
+                                                <span ng-click="RemoveTeam(team)" class="btn btn-primary btn-w-xs btn-xs marginTop6px" ng-show="teams.length > 1">Verwijder team</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-repeat="player in team.players">
+                                            <label class="control-label col-sm-2">
+                                                Speler {{$index + 1}}
+                                            </label>
+                                            <div class="col-sm-5">
+                                                <input ng-model="player.name" class="form-control" type="text"/>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <span class="btn btn-primary btn-w-xs btn-xs marginTop6px" ng-click="RemovePlayer(team, player)" ng-show="team.players.length > 1">Verwijder</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-2 col-sm-offset-2">
+                                                <span class="btn btn-success btn-w-xs btn-xs" ng-show="team.players.length <= 4" ng-click="AddPlayer(team)"><i class="fa fa-user"></i> Speler toevoegen</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+							<form class="form-horizontal form-validation" ng-show="Game.type === 'singles'">
+								<div class="form-group" ng-repeat="player in Game.singlePlayers">
+									<label class="control-label col-sm-2">
+										Speler {{$index + 1}}
+									</label>
+									<div class="col-sm-5">
+										<input ng-model="player.name" class="form-control" type="text"/>
+									</div>
+									<div class="col-sm-1">
+										<span class="btn btn-primary btn-w-xs btn-xs marginTop6px" ng-click="RemoveSinglePlayer(player)" ng-show="Game.singlePlayers.length > 1">Verwijder</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2 col-sm-offset-2">
+										<span class="btn btn-success btn-w-xs btn-xs" ng-show="Game.singlePlayers.length < 8" ng-click="AddSinglePlayer()"><i class="fa fa-user"></i> Speler toevoegen</span>
+									</div>
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Spel instellingen</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal form-validation">
+                                <div class="form-group">
+                                    <label for="gameType" class="control-label col-sm-3">Speltype</label>
+                                    <span class="ui-select" style="width:50%">
+                                        <select ng-model="Game.type" id="gameType" ng-options="g.type as g.name for g in GameTypes"></select>
+                                    </span>
+                                </div>
+
+                                <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                                <section ng-show="Game.type === 'game'">
+                                    <div class="form-group">
+									<div class="row">
+										<label class="col-sm-3 control-label">Beginscore</label>
+                                        <dl class="dl-horizontal">
+                                            <dd class="col-sm-5" style="margin-left:0px">
+                                                <label class="ui-radio" ng-repeat="score in startScores">
+                                                    <input name="radio1" type="radio" ng-model="Game.startScore" value="{{score}}"><span>{{score}}</span>
+                                                </label>
+                                            </dd>
+										</dl>
+										</div>
+										<div class="row">
+										<dl class="dl-horizontal">
+											<label class="col-sm-3 control-label"></label>
+											<dd class="col-sm-8" style="margin-left:0px">
+												<label class="ui-radio marginTop6px" style="float:left;margin-right: 0;">
+													<input name="radio1" type="radio" id="customScoreRadio" ng-model="Game.startScore" value="custom"><span>Custom</span>
+												</label>
+												<div class="col-sm-3">
+													<input type="text" id="customScoreInput" ng-model="customScore" class="form-control" />
+												</div>
+											</dd>
+                                        </dl>
+										</div>
+                                    </div>
+
+                                    <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3">Doelstelling</label>
+                                        <div class="col-sm-3">
+                                            <span ng-show="Game.amountOfTeams > 2" class="marginTop6px onlyFirstTo">
+                                                First To
+                                            </span>
+                                            <span ng-hide="Game.amountOfTeams > 2" class="ui-select">
+                                                <select id="bestOf" ng-model="Game.isBestOf">
+                                                    <option value="1">Best of</option>
+                                                    <option value="0">First To</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" ng-model="Game.bestOf" class="form-control"/>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span class="ui-select">
+                                                <select ng-model="Game.isLegs">
+                                                    <option value="1">Legs</option>
+                                                    <option value="0">Sets</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                                    <button class="btn btn-primary" ng-click="GameOn()">Start spel <i class="fa fa-play"></i></button>    
+                                </section>
+								<section ng-show="Game.type === 'singles'">
+                                    <div class="form-group">
+										<label class="col-sm-3 control-label">Volgorde</label>
+                                        <dl class="dl-horizontal">
+                                            <dd class="col-sm-5" style="margin-left:0px">
+                                                <label class="ui-radio" ng-repeat="sequence in sequences">
+                                                    <input name="seqRadio" type="radio" ng-model="Game.sequence" value="{{sequence.type}}"><span ng-bind-html="sequence.title"></span>
+                                                </label>
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="divider divider-dashed divider-lg pull-in"></div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label">BULL</label>
+                                        <dl class="dl-horizontal">
+                                            <dd class="col-sm-5 marginTop6px" style="margin-left:0px">
+                                                <label class="ui-checkbox">
+                                                    <input name="bullCb" type="checkbox" ng-model="hasBull"><span> BULL in het spel</span>
+                                                </label>
+                                            </dd>
+                                        </dl>
+                                    </div>
+									
+									<div class="divider divider-dashed divider-lg pull-in"></div>
+									
+                                    <button class="btn btn-primary" ng-click="GameOn()">Start spel <i class="fa fa-play"></i></button>    
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- START OF GAME -->
+    <section ng-show="view === 'gameplay'">
+        <header class="profile-header-small">
+            <span ng-hide="true" class="profile-cancel"><i class="fa fa-times"></i></span>
+            <div class="profile-title centered">
+                <span>{{Game.isBestOf == 1 ? "Best of" : "First to"}} {{Game.bestOf}} {{Game.isLegs == 1 ? "legs" : "sets"}}</span>
+            </div>
+            <div class="profile-info">
+                <ul class="list-unstyled list-inline">
+                    <li><button type="button" ng-click="GameOptions()" class="btn btn-w-md btn-danger btn-sm">Spel stoppen</button></li>
+                    <li><button type="button" ng-class="{'active' : subView.name == 'statistics'}" ng-click="setSubView('statistics')" class="btn btn-primary"><i class="ti-bar-chart"></i> Statistieken</button></li>
+                    <li><button type="button" ng-class="{'active' : subView.name == 'scoreBoard'}" ng-click="setSubView('scoreBoard')" class="btn btn-primary"><i class="ti-notepad"></i> Scoreborden</button></li>
+					<li><button type="button" ng-click="showStats()" class="btn btn-info-alt"><i class="ti-bar-chart"></i> Tussenstand</button></li>
+				</ul>
+            </div>
+        </header>
+        <div class="panel panel-default" >
+            <div class="panel-body">
+                <div class="row">
+                    <div class="gameForm">
+                        <section>
+                            <div class="teamrow">
+                                <section class="game" ng-class="{leftHalf:$even,rightHalf:$odd,'throwing': team.ID == currentTeam.ID}"  ng-repeat="team in teams| filter: {firstRow:true}">
+                                    <span ng-hide="Game.amountOfTeams < Game.amountOfPlayers" class="player">{{team.players[0].name|| 'Geen naam'}}</span>
+                                    <section ng-show="subView.name == 'statistics'">
+                                        <h2 class="score centered" ng-class="{'multi':Game.amountOfPlayers > Game.amountOfTeams}">{{team.remaining}}</h2>
+                                        <div ng-repeat="player in team.players" ng-show="Game.amountOfPlayers > Game.amountOfTeams">
+                                            <span class="multiplayer" ng-class="{'activePlayer': player.ID === currentPlayer.ID && team.ID === currentTeam.ID}">
+                                                {{player.name|| 'Geen naam'}}
+                                            </span>
+                                        </div>
+                                        <p class="possible" ng-show="throwOutOptions[team.remaining]">{{throwOutOptions[team.remaining].default.join(', ')}}</p>
+                                        <p class="impossible" ng-show="!throwOutOptions[team.remaining] && team.remaining <= 170">Geen uitgooi mogelijk</p>
+
+                                        <div class="stats">
+                                            <table class="table table-bordered table-striped table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="bold">3-dart gemiddelde (spel)</td>
+                                                        <td>{{team.avg|| 0 | number:2 || 'n.v.t.'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">3-dart gemiddelde (leg)</td>
+                                                        <td>{{(((Game.startScore - team.remaining) * 3) / currentLeg.darts[team.ID] | number:2) || 'n.v.t.'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Aantal darts gegooid</td>
+                                                        <td>{{currentLeg.darts[team.ID]|| 0}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Gemiddeld aantal darts per leg:</td>
+                                                        <td>{{team.avgDarts|| 'n.v.t.'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="bold">Laatste score</td>
+                                                        <td>{{team.lastScore|| 'n.v.t.'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+									<section ng-show="subView.name == 'scoreBoard'">
+										<section class="scoreBoard">
+											<div class="scoreRow">
+												<span></span><span class="remaining">{{Game.startScore}}</span>
+											</div>
+											<span class="strike" ng-repeat-start="score in currentLeg.scores | filter: {teamID: team.ID}">{{score.score}}</span>
+											<span ng-class="{'strike': !$last, 'bold': $last}" ng-repeat-end>{{score.remaining}}</span>
+										</section>
+										<p class="possible" ng-show="throwOutOptions[team.remaining]">{{throwOutOptions[team.remaining].default.join(', ')}}</p>
+										<p class="impossible" ng-show="!throwOutOptions[team.remaining] && team.remaining <= 170">Geen uitgooi mogelijk</p>
+									</section>
+                                </section>
+                                <section class="midSection">
+                                    <input class="scoreInput" min="0" ui-keydown="{'enter':'SubmitScore()','ctrl-enter':'UndoScore()'}" ng-model="score" type="number"/>
+                                    <span class="submitScore" ng-click="SubmitScore()">Score opslaan</span>
+                                    <span class="undoScore" ng-show="currentLeg.scores.length" ng-click="UndoScore()">Ongedaan maken</span>
+                                </section>
+                            </div>
+                            <section class="game" ng-class="{leftHalf:$even,rightHalf:$odd,'throwing': team.ID == currentTeam.ID}"  ng-repeat="team in teams| filter: {firstRow:false}">
+                                <span ng-hide="Game.amountOfTeams < Game.amountOfPlayers" class="player">{{team.players[0].name|| 'Geen naam'}}</span>
+                                <section ng-show="subView.name == 'statistics'">
+                                    <h2 class="score centered" ng-class="{'multi':Game.amountOfPlayers > Game.amountOfTeams}">{{team.remaining}}</h2>
+                                    <div ng-repeat="player in team.players" ng-show="Game.amountOfPlayers > Game.amountOfTeams">
+                                        <span class="multiplayer" ng-class="{'activePlayer': player.ID === currentPlayer.ID && team.ID === currentTeam.ID}">
+                                            {{player.name|| 'Geen naam'}}
+                                        </span>
+                                    </div>
+                                    <p class="possible" ng-show="throwOutOptions[team.remaining]">{{throwOutOptions[team.remaining].default.join(', ')}}</p>
+                                    <p class="impossible" ng-show="!throwOutOptions[team.remaining] && team.remaining <= 170">Geen uitgooi mogelijk</p>
+                                    <div class="stats">
+                                        <table class="table table-bordered table-striped table-responsive">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="bold">3-dart gemiddelde (spel)</td>
+                                                    <td>{{team.avg|| 0 | number:2 || 'n.v.t.'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bold">3-dart gemiddelde (leg)</td>
+                                                    <td>{{(((Game.startScore - team.remaining) * 3) / currentLeg.darts[team.ID] | number:2) || 'n.v.t.'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bold">Aantal darts gegooid</td>
+                                                    <td>{{currentLeg.darts[team.ID]|| 0}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bold">Gemiddeld aantal darts per leg:</td>
+                                                    <td>{{team.avgDarts|| 'n.v.t.'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bold">Laatste score</td>
+                                                    <td>{{team.lastScore|| 'n.v.t.'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </section>
+                                <section ng-show="subView.name == 'scoreBoard'">
+									<section class="scoreBoard">
+										<div class="scoreRow">
+											<span></span><span class="remaining">{{Game.startScore}}</span>
+										</div>
+										<span class="strike" ng-repeat-start="score in currentLeg.scores | filter: {teamID: team.ID}">{{score.score}}</span>
+										<span ng-class="{'strike': !$last, 'bold': $last}" ng-repeat-end>{{score.remaining}}</span>
+									</section>
+									<p class="possible" ng-show="throwOutOptions[team.remaining]">{{throwOutOptions[team.remaining].default.join(', ')}}</p>
+									<p class="impossible" ng-show="!throwOutOptions[team.remaining] && team.remaining <= 170">Geen uitgooi mogelijk</p>
+								</section>
+                            </section>
+                            <div class="scoreOverview" ng-class="{'rightPos': teams.length % 2 == 1}">
+                                <table class="table scoreTable table-bordered table-striped table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Team</th>
+                                            <th>Legs</th>
+                                            <th ng-hide="Game.isLegs">Sets</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="team in teams">
+                                            <td>{{team.players[0].name}}</td>
+                                            <td>{{currentSet.legsWon[team.ID]|| 0}}</td>
+                                            <td ng-hide="Game.isLegs">{{team.setsWon}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	<section ng-show="view === 'singles'">
+		<header class="profile-header-small">
+            <span ng-hide="true" class="profile-cancel"><i class="fa fa-times"></i></span>
+            <div class="profile-title centered">
+                <span>Singles training</span>
+            </div>
+            <div class="profile-info">
+                <ul class="list-unstyled list-inline">
+                    <li><button type="button" ng-click="GameOptions()" class="btn btn-w-md btn-danger btn-sm">Spel stoppen</button></li>
+                </ul>
+            </div>
+        </header>
+        <div class="panel panel-default" >
+            <div class="panel-body">
+				<div class="col-sm-12" style="background-color: #F7F7F7;">
+					<div class="col-sm-2">
+						<label class="marginTop6px ui-checkbox">
+							<input id="showTimeline" ng-model="showTimeline" type="checkbox"/> <span>Toon timeline</span>
+						</label>
+					</div>
+					<div class="col-sm-10">
+						<ul class="entryTimeline" ng-show="showTimeline">
+							<li ng-repeat="entry in dartBoard" ng-class="{'bg-success' : $index < entryIndex, 'bg-primary' : $index == entryIndex}">{{entry.title}}</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12"><hr/></div>	
+				<div class="col-sm-12">	
+					<div class="col-sm-4">
+						<span class="nextToThrow">{{currentEntry.title}}</span>
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label centered fullWidth" for="scoreInput">Aantal keer "{{currentEntry.title}}" gegooid</label>
+						<input class="scoreInput" max="9" min="0" id="scoreInput" ui-keydown="{'enter':'checkValue()','ctrl-enter':'UndoSingleScore()'}" ng-model="singleScore" type="number"/>
+						<span class="submitScore" ng-click="checkValue()">Opslaan</span>
+						<span class="undoScore" ng-show="Game.singlePlayers[0].scores.length > 0" ng-click="UndoSingleScore()">Ongedaan maken</span>
+					</div>
+				</div>
+				<div class="col-sm-12"><hr/></div>
+				<div class="col-sm-12">	
+					<div class="col-sm-10 col-sm-offset-1">
+						<table class="table table-bordered playerTable table-striped table-responsive">
+							<thead>
+								<tr>
+									<th>Naam</th>
+									<th ng-repeat="entry in dartBoard | orderBy :'val'">{{entry.title}}</th>
+									<th>Totaal</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-class="{'bg-primary': player.ID == currentPlayer.ID}" ng-repeat="player in Game.singlePlayers">
+									<td>{{player.name}}</td>
+									<td ng-repeat="nmbr in dartBoard | orderBy :'val'">{{player.scores[nmbr.val]}}</td>
+									<td class="bold">{{player.hits}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+        </div>
+	</section>
+</div>
